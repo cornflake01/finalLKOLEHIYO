@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="addstudent.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Add Student</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Add Student</h2>
+        <form id="createForm" class="student-form">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="lrn_number" class="form-label">LRN Number</label>
+                <input type="text" class="form-control" id="lrn_number" name="lrn_number">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="mb-3">
+                <label for="strand" class="form-label">Strand</label>
+                <input type="text" class="form-control" id="strand" name="strand">
+            </div>
+            <div class="mb-3">
+                <label for="grade" class="form-label">Grade Level</label>
+                <input type="text" class="form-control" id="grade" name="grade">
+            </div>
+            <div class="mb-3">
+                <label for="section" class="form-label">Section</label>
+                <input type="text" class="form-control" id="section" name="section">
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="mb-3">
+                <input type="submit" id="submit" value="Add Student" class="btn btn-primary"></button>
+                <button type="button" class="btn btn-secondary" onclick="goToDashboard()">Back to Dashboard</button>
+            </div>
+        </form>
+    </div>
+
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
+        authDomain: "l-kolehiyo-capstone.firebaseapp.com",
+        databaseURL: "https://l-kolehiyo-capstone-default-rtdb.firebaseio.com",
+        projectId: "l-kolehiyo-capstone",
+        storageBucket: "l-kolehiyo-capstone.appspot.com",
+        messagingSenderId: "1032233320347",
+        appId: "1:1032233320347:web:109c19d37aec6d0364eb3e",
+        measurementId: "G-D5R84EF8KY"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    document.getElementById("createForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const lrn = document.getElementById("lrn_number").value;
+        const email = document.getElementById("email").value;
+        const strand = document.getElementById("strand").value;
+        const grade = document.getElementById("grade").value;
+        const section = document.getElementById("section").value;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        addStudent(name, lrn, email, strand, grade, section, username, password);
+    });
+
+    function addStudent(name, lrn, email, strand, grade, section, username, password) {
+        set(ref(db, 'students/' + username), {
+            name: name,
+            lrn: lrn,
+            email: email,
+            strand: strand,
+            grade: grade,
+            section: section,
+            username: username,
+            password: password
+        }).then(() => {
+            console.log("Student added successfully.");
+            document.getElementById("createForm").reset();
+            window.location.href = "studentinfo.html"; // Redirect to studentinfo.html
+        }).catch((error) => {
+            console.error("Error adding student: ", error);
+        });
+    }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

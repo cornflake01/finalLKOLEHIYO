@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Dashboard</title>
+    <link rel="stylesheet" href="feedbacks.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Student Feedback</h1>
+        <div id="feedbackContainer"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.firestore();
+
+        // Function to fetch feedback data and populate the page
+        function fetchFeedback() {
+            const feedbackContainer = document.getElementById("feedbackContainer");
+
+            database.collection("feedback").get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    const feedbackData = doc.data();
+                    const feedbackCard = document.createElement("div");
+                    feedbackCard.classList.add("feedback-card");
+                    feedbackCard.innerHTML = `
+                        <h3>${feedbackData.name}</h3>
+                        <p><strong>Concern:</strong> ${feedbackData.concern}</p>
+                        <p><strong>Feedback:</strong> ${feedbackData.feedback}</p>
+                    `;
+                    feedbackContainer.appendChild(feedbackCard);
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting feedback: ", error);
+            });
+        }
+
+        // Call the fetchFeedback function when the page loads
+        window.onload = fetchFeedback;
+    </script>
+</body>
+</html>
