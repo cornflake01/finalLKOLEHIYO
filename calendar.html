@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="addevent.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Add Event</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Add School Events</h2>
+        <form id="createForm" class="event-form">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br><br>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br><br>
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+            <input type="submit" value="Create Event">
+            <button type="button" onclick="goToDashboard()">Back to Dashboard</button>
+        </form>
+    </div>
+
+    <!-- Include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
+            authDomain: "l-kolehiyo-capstone.firebaseapp.com",
+            databaseURL: "https://l-kolehiyo-capstone-default-rtdb.firebaseio.com",
+            projectId: "l-kolehiyo-capstone",
+            storageBucket: "l-kolehiyo-capstone.appspot.com",
+            messagingSenderId: "1032233320347",
+            appId: "1:1032233320347:web:109c19d37aec6d0364eb3e",
+            measurementId: "G-D5R84EF8KY"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+
+        document.getElementById("createForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const title = document.getElementById("title").value;
+            const date = document.getElementById("date").value;
+            const description = document.getElementById("description").value;
+
+            addEvent(title, date, description);
+        });
+
+        function addEvent(title, date, description) {
+            const eventRef = database.ref("events").push();
+            eventRef.set({
+                title: title,
+                date: date,
+                description: description
+            })
+            .then(() => {
+                console.log("Event added with ID: ", eventRef.key);
+                document.getElementById("createForm").reset();
+            })
+            .catch(error => {
+                console.error("Error adding event: ", error);
+            });
+        }
+
+        function goToDashboard() {
+            window.location.href = "dashboard.html";
+        }
+    </script>
+</body>
+</html>
