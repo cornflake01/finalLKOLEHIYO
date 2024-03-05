@@ -5,7 +5,7 @@ import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
+    apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
     authDomain: "l-kolehiyo-capstone.firebaseapp.com",
     databaseURL: "https://l-kolehiyo-capstone-default-rtdb.firebaseio.com",
     projectId: "l-kolehiyo-capstone",

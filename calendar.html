@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="addevent.css">
+    <link rel="stylesheet" href="calendar.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <title>Add Event</title>
+    <title>Add L-KOLEHIYO Event</title>
 </head>
 <body>
     <div class="container">
@@ -21,12 +21,12 @@
             <button type="button" onclick="goToDashboard()">Back to Dashboard</button>
         </form>
     </div>
-
-    <!-- Include Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"></script>
-
-    <script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+    
         // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
@@ -38,12 +38,12 @@
             appId: "1:1032233320347:web:109c19d37aec6d0364eb3e",
             measurementId: "G-D5R84EF8KY"
         };
-
+    
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        const database = firebase.database();
-
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+    
         document.getElementById("createForm").addEventListener("submit", function(event) {
             event.preventDefault();
             const title = document.getElementById("title").value;
@@ -52,16 +52,15 @@
 
             addEvent(title, date, description);
         });
-
         function addEvent(title, date, description) {
-            const eventRef = database.ref("events").push();
-            eventRef.set({
+            const eventsRef = ref(db, "events");
+            push(eventsRef, {
                 title: title,
                 date: date,
                 description: description
             })
             .then(() => {
-                console.log("Event added with ID: ", eventRef.key);
+                console.log("Event added successfully.");
                 document.getElementById("createForm").reset();
             })
             .catch(error => {
@@ -72,6 +71,7 @@
         function goToDashboard() {
             window.location.href = "dashboard.html";
         }
-    </script>
+    
+     </script>
 </body>
 </html>

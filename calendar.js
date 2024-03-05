@@ -1,6 +1,6 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,21 +16,31 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const analytics = getAnalytics(app);
+const database = getDatabase(app);
 
-// Function to add an event to Realtime Database
-function addEventToRealtimeDatabase(title, date, description) {
-    const eventsRef = ref(db, 'events');
-    const newEventRef = push(eventsRef);
-    newEventRef.set({
+
+document.getElementById("createForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const title = document.getElementById("title").value;
+    const date = document.getElementById("date").value;
+    const description = document.getElementById("description").value;
+
+    addEvent(title, date, description);
+});
+
+function addEvent(title, date, description) {
+    set(ref(db, 'events' + title), {
         title: title,
         date: date,
         description: description
-    }).then(() => {
-        console.log("Event added with ID: ", newEventRef.key);
-    }).catch((error) => {
+    })
+    .then(() => {
+        console.log("Event added successfully.");
+        document.getElementById("createForm").reset();
+    })
+    .catch(error => {
         console.error("Error adding event: ", error);
     });
 }
-
-export { addEventToRealtimeDatabase };
