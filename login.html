@@ -9,7 +9,7 @@
 <style>
     body {
         background-color: #002145;
-        font-family: Arial, sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         height: 100vh;
         margin: 0;
         display: flex;
@@ -18,9 +18,9 @@
     }
     .login-container {
         max-width: 400px;
-        padding: 40px;
+        padding: 30px;
         border-radius: 10px;
-        background-color: #fff;
+        background-color: #f8f9fa;
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
     }
     .login-container h2 {
@@ -30,7 +30,7 @@
     }
     .form-control {
         border-radius: 20px;
-        padding: 10px;
+        padding: 5px;
     }
     .login-button {
         border-radius: 20px;
@@ -49,6 +49,13 @@
         width: 150px;
         height: auto;
     }
+    .login-type-label {
+        font-size: 14px;
+        color: #002145;
+    }
+    .login-options {
+        margin-top: 20px;
+    }
 </style>
 </head>
 <body>
@@ -58,7 +65,7 @@
         <div class="col-lg-6">
             <div class="login-container">
                 <img src="./img/logo.jpg" alt="letran-logo" class="logo">
-                <h2>Login</h2>
+                <h2>Welcome Back!</h2>
                 <form onsubmit="return login()">
                     <div class="form-group">
                         <input type="text" class="form-control" id="username" placeholder="Username" required>
@@ -66,7 +73,14 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="password" placeholder="Password" required>
                     </div>
-                    <button type="submit" class="btn btn-block login-button">Login</button>
+                    <div class="form-group login-options">
+                        <label class="login-type-label" for="login-type">Login as:</label>
+                        <select class="form-control" id="login-type">
+                            <option value="admin">Administrator</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary login-button">Login</button>
                 </form>
             </div>
         </div>
@@ -82,9 +96,13 @@
     function login() {
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
+        var loginType = document.getElementById("login-type").value;
 
-        if (username === "admin" && password === "admin") {
-            window.location.href = "dashboard.html";
+        if (loginType === "admin" && username === "admin" && password === "admin") {
+            window.location.href = "admin_dashboard.html";
+            return false;
+        } else if (loginType === "student" && username === "student" && password === "student") {
+            window.location.href = "studentdashboard.html";
             return false;
         } else {
             alert("Invalid username or password!");
