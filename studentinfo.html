@@ -17,6 +17,20 @@
         th {
             background-color: #f2f2f2;
         }
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #002145;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-btn:hover {
+            background-color: #00172a;
+        }
     </style>
 </head>
 <body>
@@ -37,6 +51,9 @@
             <!-- Student data will be inserted here dynamically -->
         </tbody>
     </table>
+
+    <!-- Back button -->
+    <button class="back-btn" onclick="goToDashboard()">Go to Dashboard</button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
@@ -87,6 +104,11 @@
                 }
             }
         });
+
+        // Function to navigate to the dashboard
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
     </script>
 </body>
 </html>
