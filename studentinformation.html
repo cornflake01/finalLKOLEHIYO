@@ -1,92 +1,57 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Glass morphism Profile Card</title>
+    <link rel="stylesheet" href="studentinformation.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L-KOLEHIYO Student Information</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <h2>L-KOLEHIYO Student Information</h2>
-    <table id="studentTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>LRN Number</th>
-                <th>Email</th>
-                <th>Strand</th>
-                <th>Grade Level</th>
-                <th>Section</th>
-                <th>Username</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Student data will be inserted here dynamically -->
-        </tbody>
-    </table>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
-            authDomain: "l-kolehiyo-capstone.firebaseapp.com",
-            databaseURL: "https://l-kolehiyo-capstone-default-rtdb.firebaseio.com",
-            projectId: "l-kolehiyo-capstone",
-            storageBucket: "l-kolehiyo-capstone.appspot.com",
-            messagingSenderId: "1032233320347",
-            appId: "1:1032233320347:web:109c19d37aec6d0364eb3e",
-            measurementId: "G-D5R84EF8KY"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getDatabase(app);
-
-        // Reference to the students in the database
-        const studentsRef = ref(db, 'students');
-
-        // Fetch student data from Firebase
-        onValue(studentsRef, (snapshot) => {
-            const studentsData = snapshot.val();
-            const studentTableBody = document.querySelector('#studentTable tbody');
-            studentTableBody.innerHTML = ''; // Clear existing data
-
-            // Iterate over each student and add to the table
-            for (const key in studentsData) {
-                if (Object.hasOwnProperty.call(studentsData, key)) {
-                    const student = studentsData[key];
-                    const studentRow = document.createElement('tr');
-                    studentRow.innerHTML = `
-                        <td>${student.name}</td>
-                        <td>${student.lrn}</td>
-                        <td>${student.email}</td>
-                        <td>${student.strand}</td>
-                        <td>${student.grade}</td>
-                        <td>${student.section}</td>
-                        <td>${student.username}</td>
-                    `;
-                    studentTableBody.appendChild(studentRow);
-                }
-            }
-        });
-    </script>
+    <section>
+        <div class="card1">
+            <div class="card">
+                <div class="right-container">
+                  <h3 class="gradienttext">Profile Details</h3>
+                  <table>
+                      <tr>
+                          <td>Name :</td>
+                          <td>khurt Wigwigan</td>
+                        </tr>
+                    <tr>
+                      <td>LRN :</td>
+                      <td>21-0047-119</td>
+                    </tr>
+                    <tr>
+                      <td>Email :</td>
+                      <td>example@gmail.com</td>
+                    </tr>
+                    <tr>
+                      <td>Strand :</td>
+                      <td>Pines</td>
+                    </tr>
+                    <tr>
+                      <td>Grade Level :</td>
+                      <td>Grade 12</td>
+                    </tr>
+                    <tr>
+                      <td>Section :</td>
+                      <td>12-A</td>
+                    </tr>
+                    <tr>
+                      <td>Username :</td>
+                      <td>pogi</td>
+                    </tr>
+                    <tr>
+                      <td>Password :</td>
+                      <td>pogi</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <form>
+                <input type="button" value="Back to Dashboard" onclick="history.back()">
+               </form>
 </body>
 </html>

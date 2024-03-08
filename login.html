@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #002145;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-container {
-            max-width: 400px;
-            padding: 30px;
-            border-radius: 10px;
-            background-color: #f8f9fa;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-        }
-        .login-container h2 {
-            margin-bottom: 30px;
-            text-align: center;
-            color: #002145;
-        }
-        .form-control {
-            border-radius: 20px;
-            padding: 5px;
-        }
-        .login-button {
-            border-radius: 20px;
-            padding: 10px;
-            background-color: #002145;
-            border: none;
-            color: #fff;
-        }
-        .login-button:hover {
-            background-color: #00172a;
-        }
-        .logo {
-            display: block;
-            margin: auto;
-            margin-bottom: 20px;
-            width: 150px;
-            height: auto;
-        }
-        .login-type-label {
-            font-size: 14px;
-            color: #002145;
-        }
-        .login-options {
-            margin-top: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        background-color: #002145;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .login-container {
+        max-width: 400px;
+        padding: 30px;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    }
+    .login-container h2 {
+        margin-bottom: 30px;
+        text-align: center;
+        color: #002145;
+    }
+    .form-control {
+        border-radius: 20px;
+        padding: 5px;
+    }
+    .login-button {
+        border-radius: 20px;
+        padding: 10px;
+        background-color: #002145;
+        border: none;
+        color: #fff;
+    }
+    .login-button:hover {
+        background-color: #00172a;
+    }
+    .logo {
+        display: block;
+        margin: auto;
+        margin-bottom: 20px;
+        width: 150px;
+        height: auto;
+    }
+    .login-type-label {
+        font-size: 14px;
+        color: #002145;
+    }
+    .login-options {
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
 
@@ -66,7 +66,7 @@
             <div class="login-container">
                 <img src="./img/logo.jpg" alt="letran-logo" class="logo">
                 <h2>Welcome Back!</h2>
-                <form id="loginForm">
+                <form onsubmit="return login()">
                     <div class="form-group">
                         <input type="text" class="form-control" id="username" placeholder="Username" required>
                     </div>
@@ -87,56 +87,30 @@
     </div>
 </div>
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+<!-- Bootstrap JS and jQuery (optional for Bootstrap features) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
-        authDomain: "l-kolehiyo-capstone.firebaseapp.com",
-        databaseURL: "https://l-kolehiyo-capstone-default-rtdb.firebaseio.com",
-        projectId: "l-kolehiyo-capstone",
-        storageBucket: "l-kolehiyo-capstone.appspot.com",
-        messagingSenderId: "1032233320347",
-        appId: "1:1032233320347:web:109c19d37aec6d0364eb3e",
-        measurementId: "G-D5R84EF8KY"
-    };
+<script>
+    function login() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var loginType = document.getElementById("login-type").value;
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getDatabase(app);
-    
-    // Login form submission
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the form from submitting normally
-        
-        // Get user input
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        const loginType = document.getElementById("login-type").value;
-
-        // Authenticate user based on login type
         if (loginType === "admin" && username === "admin" && password === "admin") {
             window.location.href = "dashboard.html";
-        } else if (loginType === "student") {
-            // Authenticate student using Firebase Authentication
-            firebase.auth().signInWithEmailAndPassword(username, password)
-                .then((userCredential) => {
-                    // Redirect to student dashboard upon successful login
-                    window.location.href = "studentdashboard.html";
-                })
-                .catch((error) => {
-                    alert("Invalid username or password!");
-                });
+            return false;
+        } else if (loginType === "student" && username === "student" && password === "student") {
+            window.location.href = "studentdashboard.html";
+            return false;
         } else {
             alert("Invalid username or password!");
+            return false;
         }
-    });
+    }
 </script>
 
 </body>
 </html>
+
