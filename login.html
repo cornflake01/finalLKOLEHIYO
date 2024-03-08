@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Page</title>
-<!-- Bootstrap CSS -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    body {
-        background-color: #002145;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .login-container {
-        max-width: 400px;
-        padding: 30px;
-        border-radius: 10px;
-        background-color: #f8f9fa;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-    }
-    .login-container h2 {
-        margin-bottom: 30px;
-        text-align: center;
-        color: #002145;
-    }
-    .form-control {
-        border-radius: 20px;
-        padding: 5px;
-    }
-    .login-button {
-        border-radius: 20px;
-        padding: 10px;
-        background-color: #002145;
-        border: none;
-        color: #fff;
-    }
-    .login-button:hover {
-        background-color: #00172a;
-    }
-    .logo {
-        display: block;
-        margin: auto;
-        margin-bottom: 20px;
-        width: 150px;
-        height: auto;
-    }
-    .login-type-label {
-        font-size: 14px;
-        color: #002145;
-    }
-    .login-options {
-        margin-top: 20px;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #002145;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        }
+        .login-container h2 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #002145;
+        }
+        .form-control {
+            border-radius: 20px;
+            padding: 5px;
+        }
+        .login-button {
+            border-radius: 20px;
+            padding: 10px;
+            background-color: #002145;
+            border: none;
+            color: #fff;
+        }
+        .login-button:hover {
+            background-color: #00172a;
+        }
+        .logo {
+            display: block;
+            margin: auto;
+            margin-bottom: 20px;
+            width: 150px;
+            height: auto;
+        }
+        .login-type-label {
+            font-size: 14px;
+            color: #002145;
+        }
+        .login-options {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -66,7 +66,7 @@
             <div class="login-container">
                 <img src="./img/logo.jpg" alt="letran-logo" class="logo">
                 <h2>Welcome Back!</h2>
-                <form onsubmit="return login()">
+                <form id="loginForm">
                     <div class="form-group">
                         <input type="text" class="form-control" id="username" placeholder="Username" required>
                     </div>
@@ -76,7 +76,6 @@
                     <div class="form-group login-options">
                         <label class="login-type-label" for="login-type">Login as:</label>
                         <select class="form-control" id="login-type">
-                            <option value="admin">Administrator</option>
                             <option value="student">Student</option>
                         </select>
                     </div>
@@ -87,30 +86,46 @@
     </div>
 </div>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-auth-compat.js"></script>
+
 <!-- Bootstrap JS and jQuery (optional for Bootstrap features) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-    function login() {
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
-        var loginType = document.getElementById("login-type").value;
+    const firebaseConfig = {
+        apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
+        authDomain: "l-kolehiyo-capstone.firebaseapp.com",
+        projectId: "l-kolehiyo-capstone",
+    };
 
-        if (loginType === "admin" && username === "admin" && password === "admin") {
-            window.location.href = "dashboard.html";
-            return false;
-        } else if (loginType === "student" && username === "student" && password === "student") {
-            window.location.href = "studentdashboard.html";
-            return false;
-        } else {
-            alert("Invalid username or password!");
-            return false;
-        }
-    }
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    const loginForm = document.getElementById('loginForm');
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        firebase.auth().signInWithEmailAndPassword(username, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                window.location.href = "studentdashboard.html";
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+    });
 </script>
 
 </body>
 </html>
-
