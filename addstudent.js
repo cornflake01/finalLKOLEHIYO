@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-
+//import { getAuth } from "firebase/auth"
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",

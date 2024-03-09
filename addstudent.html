@@ -74,10 +74,12 @@
         measurementId: "G-D5R84EF8KY"
     };
 
+    
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const db = getDatabase(app);
+    const database = getDatabase(app);
 
     document.getElementById("createForm").addEventListener("submit", function(event) {
         event.preventDefault();
@@ -94,7 +96,12 @@
     });
 
     function addStudent(name, lrn, email, strand, grade, section, username, password) {
-        set(ref(db, 'students/' + username), {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+
+            const user = userCredential.user;    
+            set(ref(db, 'students/' + user.email), {
+        
             name: name,
             lrn: lrn,
             email: email,
@@ -110,13 +117,15 @@
         }).catch((error) => {
             console.error("Error adding student: ", error);
         });
-    }
+    })
 
         function goToDashboard() {
             window.location.href = "dashboard.html";
     }
+
+}
     
     </script>
-    <script src="script.js"></script>
+    <script src="addstudent.js"></script>
 </body>
 </html>
