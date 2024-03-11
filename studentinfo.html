@@ -31,6 +31,22 @@
         .back-btn:hover {
             background-color: #00172a;
         }
+        .action-btns {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .action-btns button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .action-btns button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +61,7 @@
                 <th>Grade Level</th>
                 <th>Section</th>
                 <th>Username</th>
+                <th>Actions</th> <!-- Added column for actions -->
             </tr>
         </thead>
         <tbody>
@@ -52,63 +69,15 @@
         </tbody>
     </table>
 
+    <!-- Action buttons -->
+    <div class="action-btns">
+        <button id="addStudentBtn">Add Student</button>
+        <button id="deleteSelectedBtn">Delete Selected</button>
+    </div>
+
     <!-- Back button -->
     <button class="back-btn" onclick="goToDashboard()">Go to Dashboard</button>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
-            authDomain: "l-kolehiyo-capstone.firebaseapp.com",
-            databaseURL: "https://l-kolehiyo-capstone-default-rtdb.firebaseio.com",
-            projectId: "l-kolehiyo-capstone",
-            storageBucket: "l-kolehiyo-capstone.appspot.com",
-            messagingSenderId: "1032233320347",
-            appId: "1:1032233320347:web:109c19d37aec6d0364eb3e",
-            measurementId: "G-D5R84EF8KY"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getDatabase(app);
-
-        // Reference to the students in the database
-        const studentsRef = ref(db, 'students');
-
-        // Fetch student data from Firebase
-        onValue(studentsRef, (snapshot) => {
-            const studentsData = snapshot.val();
-            const studentTableBody = document.querySelector('#studentTable tbody');
-            studentTableBody.innerHTML = ''; // Clear existing data
-
-            // Iterate over each student and add to the table
-            for (const key in studentsData) {
-                if (Object.hasOwnProperty.call(studentsData, key)) {
-                    const student = studentsData[key];
-                    const studentRow = document.createElement('tr');
-                    studentRow.innerHTML = `
-                        <td>${student.name}</td>
-                        <td>${student.lrn}</td>
-                        <td>${student.email}</td>
-                        <td>${student.strand}</td>
-                        <td>${student.grade}</td>
-                        <td>${student.section}</td>
-                        <td>${student.username}</td>
-                    `;
-                    studentTableBody.appendChild(studentRow);
-                }
-            }
-        });
-
-        // Function to navigate to the dashboard
-        function goToDashboard() {
-            window.location.href = 'dashboard.html';
-        }
-    </script>
+    <script type="module" src="studentinfo.js"></script>
 </body>
 </html>
