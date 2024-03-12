@@ -4,19 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L-KOLEHIYO Student Information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #002145;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            color: #002145;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         th, td {
             border: 1px solid #dddddd;
             text-align: left;
-            padding: 8px;
+            padding: 12px;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
+        .action-btns {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .action-btns button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #002145;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-btns button:hover {
+            background-color: #00172a;
+        }
+
         .back-btn {
             position: fixed;
             bottom: 20px;
@@ -27,56 +74,44 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         .back-btn:hover {
             background-color: #00172a;
-        }
-        .action-btns {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .action-btns button {
-            margin: 0 10px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .action-btns button:hover {
-            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h2>L-KOLEHIYO Student Information</h2>
-    <table id="studentTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>LRN Number</th>
-                <th>Email</th>
-                <th>Strand</th>
-                <th>Grade Level</th>
-                <th>Section</th>
-                <th>Username</th>
-                <th>Actions</th> <!-- Added column for actions -->
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Student data will be inserted here dynamically -->
-        </tbody>
-    </table>
+    <div class="container">
+        <h2>L-KOLEHIYO Student Information</h2>
+        <table id="studentTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>LRN Number</th>
+                    <th>Email</th>
+                    <th>Strand</th>
+                    <th>Grade Level</th>
+                    <th>Section</th>
+                    <th>Username</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Student data will be inserted here dynamically -->
+            </tbody>
+        </table>
 
-    <!-- Action buttons -->
-    <div class="action-btns">
-        <button id="addStudentBtn">Add Student</button>
-        <button id="deleteSelectedBtn">Delete Selected</button>
+        <!-- Action buttons -->
+        <div class="action-btns">
+            <button id="addStudentBtn">Add Student</button>
+            <button id="deleteSelectedBtn">Delete Selected</button>
+        </div>
+
+        <!-- Back button -->
+        <button class="back-btn" onclick="history.back()">Go to Dashboard <i class="fas fa-arrow-right"></i></button>
     </div>
-
-    <!-- Back button -->
-    <button class="back-btn" onclick="goToDashboard()">Go to Dashboard</button>
 
     <script type="module" src="studentinfo.js"></script>
 </body>

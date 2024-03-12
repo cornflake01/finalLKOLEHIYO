@@ -58,45 +58,32 @@
         }
     </style>
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-auth-compat.js"></script>
-
     <!-- Bootstrap JS and jQuery (optional for Bootstrap features) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyA4SI2yXymjL4cwtVvKtCxGTQOeMvU968w",
-            authDomain: "l-kolehiyo-capstone.firebaseapp.com",
-            projectId: "l-kolehiyo-capstone",
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        const loginForm = document.getElementById('loginForm');
-
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const email = document.getElementById('email').value;
+        // Function to handle login
+        function login() {
+            const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const userType = document.getElementById('user-type').value;
 
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    window.location.href = "studentdashboard.html";
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorMessage);
-                });
-        });
+            // Check if username and password are correct for admin or student
+            if ((userType === 'admin' && username === 'admin' && password === 'admin') ||
+                (userType === 'student' && username === 'student' && password === 'student')) {
+                // Redirect to corresponding dashboard
+                if (userType === 'admin') {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    window.location.href = 'studentdashboard.html';
+                }
+            } else {
+                // Display error message if login credentials are incorrect
+                alert('Invalid username or password');
+            }
+        }
     </script>
 </head>
 <body>
@@ -107,21 +94,20 @@
             <div class="login-container">
                 <img src="./img/logo.jpg" alt="letran-logo" class="logo">
                 <h2>Welcome Back!</h2>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="email" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="password" placeholder="Password" required>
-                    </div>
-                    <div class="form-group login-options">
-                        <label class="login-type-label" for="login-type">Login as:</label>
-                        <select class="form-control" id="login-type">
-                            <option value="student">Student</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-block btn-primary login-button">Login</button>
-                </form>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                <div class="form-group login-options">
+                    <label class="login-type-label" for="user-type">Login as:</label>
+                    <select class="form-control" id="user-type">
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="button" onclick="login()" class="btn btn-block btn-primary login-button">Login</button>
             </div>
         </div>
     </div>
