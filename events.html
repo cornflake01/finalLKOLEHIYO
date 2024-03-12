@@ -4,59 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+          integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+          crossorigin="anonymous"/>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #002145;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: left;
+            margin-top: 30px;
+            color: #002145;
+            margin-left: 30px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         th, td {
-            padding: 8px;
+            padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #f2f2f2;
+            font-weight: bold;
+            color: #002145;
         }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 25%;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2),
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 30%;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 35%;
+            text-align: right; /* Aligning "Action" title to the right */
+        }
+
         .action-btns {
             margin-top: 20px;
             text-align: center;
         }
+
         .action-btns button {
             margin: 0 10px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
+            padding: 12px 20px;
+            background-color: #002145;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         .action-btns button:hover {
-            background-color: #45a049;
+            background-color: #00172a;
+        }
+
+        .checkbox-label {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-label input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .checkbox-label:hover input ~ .checkmark {
+            background-color: #f2f2f2;
+        }
+
+        .checkbox-label input:checked ~ .checkmark {
+            background-color: #002145;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-label input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .checkbox-label .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .action-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .action-icons i {
+            font-size: 20px;
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
-    <h2>Events</h2>
-    <table id="eventTable">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Description</th>
-                <th></th> <!-- Added empty th for checkboxes -->
-            </tr>
-        </thead>
-        <tbody id="eventBody">
-            <!-- Event data will be inserted here dynamically -->
-        </tbody>
-    </table>
+<h2>Events</h2>
+<table id="eventTable">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th style="text-align: right;">Action</th> <!-- Aligning "Action" title to the right -->
+        </tr>
+    </thead>
+    <tbody id="eventBody">
+        <!-- Event data will be inserted here dynamically -->
+    </tbody>
+</table>
 
-    <!-- Action buttons -->
-    <div class="action-btns">
-        <button id="addEventBtn">Add Event</button>
-        <button id="deleteEventBtn">Delete Event</button>
-    </div>
+<!-- Action buttons -->
+<div class="action-btns">
+    <button id="addEventBtn"><i class="fas fa-plus"></i> Add Event</button>
+    <button id="deleteEventBtn"><i class="fas fa-trash-alt"></i> Delete Event</button>
+</div>
 
-    <script type="module" src="events.js"></script>
+<script type="module" src="events.js"></script>
 </body>
 </html>

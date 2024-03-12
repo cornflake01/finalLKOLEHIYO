@@ -4,36 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L-KOLEHIYO Student Feedback</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+          integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+          crossorigin="anonymous"/>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #002145;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #002145;
+            margin-top: 30px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         th, td {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
+            padding: 12px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #f2f2f2;
+            font-weight: bold;
+            color: #002145;
+        }
+
+        th:first-child,
+        td:first-child {
+            width: 20%;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2),
+        th:nth-child(3),
+        td:nth-child(3),
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 20%;
+        }
+
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 20%;
+        }
+
+        script {
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn input[type="button"] {
+            background-color: #002145;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn input[type="button"]:hover {
+            background-color: #00172a;
+        }
+
+        .action-btns button {
+            margin: 0 5px;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-btns button:hover {
+            background-color: #45a049;
+        }
+
+        .action-btns button.ignore {
+            background-color: #f44336;
+        }
+
+        .action-btns button.ignore:hover {
+            background-color: #d32f2f;
         }
     </style>
 </head>
 <body>
-<h1> L-KOLEHIYO Student Feedbacks </h1>
+<h1>L-KOLEHIYO Student Feedbacks</h1>
 <table id="feedbackTable">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Rating</th>
-            <th>Description</th>
-            <th>Date</th>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Rating</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
     </thead>
     <tbody>
-        <!-- Table rows will be inserted here dynamically -->
+    <!-- Table rows will be inserted here dynamically -->
     </tbody>
 </table>
 
@@ -58,8 +149,8 @@
 
         const feedbackTable = document.getElementById('feedbackTable').getElementsByTagName('tbody')[0];
 
-        database.ref('feedbacks').once('value', function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
+        database.ref('feedbacks').once('value', function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
                 const childData = childSnapshot.val();
                 const row = feedbackTable.insertRow();
                 row.insertCell(0).textContent = childData.name || '';
@@ -67,10 +158,31 @@
                 row.insertCell(2).textContent = childData.rating || '';
                 row.insertCell(3).textContent = childData.description || '';
                 row.insertCell(4).textContent = childData.timestamp ? new Date(childData.timestamp).toLocaleString() : '';
+                const actionCell = row.insertCell(5);
+                const acceptButton = document.createElement('button');
+                acceptButton.textContent = 'Accept';
+                acceptButton.classList.add('accept');
+                acceptButton.onclick = function() {
+                    // Add logic to accept the feedback
+                };
+                const ignoreButton = document.createElement('button');
+                ignoreButton.textContent = 'Ignore';
+                ignoreButton.classList.add('ignore');
+                ignoreButton.onclick = function() {
+                    // Add logic to ignore the feedback
+                };
+                actionCell.appendChild(acceptButton);
+                actionCell.appendChild(ignoreButton);
             });
         });
     });
 </script>
+
+<div class="back-btn">
+    <form>
+        <input type="button" value="Back to Dashboard" onclick="history.back()">
+    </form>
+</div>
 
 </body>
 </html>
