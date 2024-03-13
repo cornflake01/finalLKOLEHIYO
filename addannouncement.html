@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcement Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .announcement-title {
+            color: #002145;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .announcement-form {
+            margin-bottom: 20px;
+        }
+
+        .btn-custom {
+            background-color: #002145;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #002145;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="announcement-title">Announcement Management</h1>
+
+        <form id="announcementForm" class="announcement-form">
+            <div class="form-group">
+                <label for="announcementTitle">Title:</label>
+                <input type="text" class="form-control" id="announcementTitle" name="announcementTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="announcementDate">Date:</label>
+                <input type="date" class="form-control" id="announcementDate" name="announcementDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="announcementDescription">Description:</label>
+                <textarea class="form-control" id="announcementDescription" name="announcementDescription" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-custom mr-2">Submit</button>
+            <a href="dashboard.html" class="btn btn-custom">Go to Dashboard</a>
+        </form>
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Function to handle form submission
+        document.getElementById("announcementForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            var title = document.getElementById("announcementTitle").value; // Get the value from the title field
+            var date = document.getElementById("announcementDate").value; // Get the value from the date field
+            var description = document.getElementById("announcementDescription").value; // Get the value from the description field
+
+            // Update the announcement text with title, date, and description
+            document.getElementById("announcementTitleText").innerText = "Title: " + title;
+            document.getElementById("announcementDateText").innerText = "Date: " + date;
+            document.getElementById("announcementDescriptionText").innerText = "Description: " + description;
+
+            document.getElementById("announcementForm").reset(); // Clear the form
+        });
+    </script>
+</body>
+</html>
