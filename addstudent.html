@@ -61,6 +61,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
     import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js"; // Import Firebase Auth module
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -77,55 +78,58 @@
     
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getDatabase(app);
-    const database = getDatabase(app);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+        const auth = getAuth(app); // Initialize Firebase Auth
 
-    document.getElementById("createForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        const name = document.getElementById("name").value;
-        const lrn = document.getElementById("lrn_number").value;
-        const email = document.getElementById("email").value;
-        const strand = document.getElementById("strand").value;
-        const grade = document.getElementById("grade").value;
-        const section = document.getElementById("section").value;
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
+        document.getElementById("createForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const lrn = document.getElementById("lrn_number").value;
+            const email = document.getElementById("email").value;
+            const strand = document.getElementById("strand").value;
+            const grade = document.getElementById("grade").value;
+            const section = document.getElementById("section").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-        addStudent(name, lrn, email, strand, grade, section, username, password);
-    });
-
-    function addStudent(name, lrn, email, strand, grade, section, username, password) {
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-
-            const user = userCredential.user;    
-            set(ref(db, 'students/' + user.email), {
-        
-            name: name,
-            lrn: lrn,
-            email: email,
-            strand: strand,
-            grade: grade,
-            section: section,
-            username: username,
-            password: password
-        }).then(() => {
-            console.log("Student added successfully.");
-            document.getElementById("createForm").reset();
-            window.location.href = "studentinfo.html"; // Redirect to studentinfo.html
-        }).catch((error) => {
-            console.error("Error adding student: ", error);
+            addStudent(name, lrn, email, strand, grade, section, username, password);
         });
-    })
 
-        function goToDashboard() {
-            window.location.href = "dashboard.html";
-    }
+        function addStudent(name, lrn, email, strand, grade, section, username, password) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    const userData = {
+                        name: name,
+                        lrn: lrn,
+                        email: email,
+                        strand: strand,
+                        grade: grade,
+                        section: section,
+                        username: username,
+                        password: password
+                    };
 
+                    // Save user data to the database
+                    set(ref(db, 'students/' + user.uid), userData)
+                        .then(() => {
+                            console.log("Student data saved successfully.");
+                            document.getElementById("createForm").reset();
+                            window.location.href = "studentinfo.html"; // Redirect to studentinfo.html
+                        })
+                        .catch((error) => {
+                            console.error("Error saving student data: ", error);
+                        });
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        console.error("Error creating user: The email address is already in use.");
+                    } else {
+                        console.error("Error creating user: ", error);
+                    }
+        });
 }
-    
     </script>
-    <script src="addstudent.js"></script>
 </body>
 </html>
